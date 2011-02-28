@@ -3,15 +3,17 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		8DD76FAC0486AB0100D96B5E /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 08FB7796FE84155DC02AAC07 /* main.c */; settings = {ATTRIBUTES = (); }; };
 		8DD76FB00486AB0100D96B5E /* thumbs.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = C6A0FF2C0290799A04C91782 /* thumbs.1 */; };
-		B80D50150FCAAA1D008E9B48 /* libexif.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B80D50130FCAAA1D008E9B48 /* libexif.a */; };
-		B80D50160FCAAA1D008E9B48 /* libgd.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B80D50140FCAAA1D008E9B48 /* libgd.a */; };
-		B85B24AC10861359007328DB /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = B85B24AB10861359007328DB /* Makefile */; };
+		B85464C6131BBCAB00E3F7D7 /* args.c in Sources */ = {isa = PBXBuildFile; fileRef = B85464C0131BBCAB00E3F7D7 /* args.c */; };
+		B85464C7131BBCAB00E3F7D7 /* functions.c in Sources */ = {isa = PBXBuildFile; fileRef = B85464C2131BBCAB00E3F7D7 /* functions.c */; };
+		B85464C8131BBCAB00E3F7D7 /* image_processing.c in Sources */ = {isa = PBXBuildFile; fileRef = B85464C4131BBCAB00E3F7D7 /* image_processing.c */; };
+		B85464D0131BBD0600E3F7D7 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B85464CF131BBD0600E3F7D7 /* Accelerate.framework */; };
+		B85464D4131BBD1900E3F7D7 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B85464D3131BBD1900E3F7D7 /* ApplicationServices.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -30,8 +32,15 @@
 /* Begin PBXFileReference section */
 		08FB7796FE84155DC02AAC07 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		8DD76FB20486AB0100D96B5E /* thumbs */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = thumbs; sourceTree = BUILT_PRODUCTS_DIR; };
-		B80D50130FCAAA1D008E9B48 /* libexif.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libexif.a; sourceTree = "<group>"; };
-		B80D50140FCAAA1D008E9B48 /* libgd.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libgd.a; sourceTree = "<group>"; };
+		B85464C0131BBCAB00E3F7D7 /* args.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = args.c; sourceTree = "<group>"; };
+		B85464C1131BBCAB00E3F7D7 /* args.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = args.h; sourceTree = "<group>"; };
+		B85464C2131BBCAB00E3F7D7 /* functions.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = functions.c; sourceTree = "<group>"; };
+		B85464C3131BBCAB00E3F7D7 /* functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = functions.h; sourceTree = "<group>"; };
+		B85464C4131BBCAB00E3F7D7 /* image_processing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = image_processing.c; sourceTree = "<group>"; };
+		B85464C5131BBCAB00E3F7D7 /* image_processing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = image_processing.h; sourceTree = "<group>"; };
+		B85464C9131BBCB500E3F7D7 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		B85464CF131BBD0600E3F7D7 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		B85464D3131BBD1900E3F7D7 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		B85B24AB10861359007328DB /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		C6A0FF2C0290799A04C91782 /* thumbs.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = thumbs.1; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -41,8 +50,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B80D50150FCAAA1D008E9B48 /* libexif.a in Frameworks */,
-				B80D50160FCAAA1D008E9B48 /* libgd.a in Frameworks */,
+				B85464D0131BBD0600E3F7D7 /* Accelerate.framework in Frameworks */,
+				B85464D4131BBD1900E3F7D7 /* ApplicationServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +72,13 @@
 		08FB7795FE84155DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				B85464C9131BBCB500E3F7D7 /* README.txt */,
+				B85464C0131BBCAB00E3F7D7 /* args.c */,
+				B85464C1131BBCAB00E3F7D7 /* args.h */,
+				B85464C2131BBCAB00E3F7D7 /* functions.c */,
+				B85464C3131BBCAB00E3F7D7 /* functions.h */,
+				B85464C4131BBCAB00E3F7D7 /* image_processing.c */,
+				B85464C5131BBCAB00E3F7D7 /* image_processing.h */,
 				B85B24AB10861359007328DB /* Makefile */,
 				08FB7796FE84155DC02AAC07 /* main.c */,
 			);
@@ -80,8 +96,8 @@
 		B80D4F620FCA9B6F008E9B48 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B80D50130FCAAA1D008E9B48 /* libexif.a */,
-				B80D50140FCAAA1D008E9B48 /* libgd.a */,
+				B85464CF131BBD0600E3F7D7 /* Accelerate.framework */,
+				B85464D3131BBD1900E3F7D7 /* ApplicationServices.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -95,22 +111,6 @@
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
-
-/* Begin PBXLegacyTarget section */
-		B86CC6830FE4857E0058E728 /* Build with make */ = {
-			isa = PBXLegacyTarget;
-			buildArgumentsString = "$(ACTION)";
-			buildConfigurationList = B86CC68A0FE4858D0058E728 /* Build configuration list for PBXLegacyTarget "Build with make" */;
-			buildPhases = (
-			);
-			buildToolPath = /usr/bin/make;
-			dependencies = (
-			);
-			name = "Build with make";
-			passBuildSettingsInEnvironment = 1;
-			productName = "Build with make";
-		};
-/* End PBXLegacyTarget section */
 
 /* Begin PBXNativeTarget section */
 		8DD76FA90486AB0100D96B5E /* thumbs */ = {
@@ -137,7 +137,7 @@
 		08FB7793FE84155DC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = 1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "thumbs" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -151,7 +151,6 @@
 			projectRoot = "";
 			targets = (
 				8DD76FA90486AB0100D96B5E /* thumbs */,
-				B86CC6830FE4857E0058E728 /* Build with make */,
 			);
 		};
 /* End PBXProject section */
@@ -162,7 +161,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8DD76FAC0486AB0100D96B5E /* main.c in Sources */,
-				B85B24AC10861359007328DB /* Makefile in Sources */,
+				B85464C6131BBCAB00E3F7D7 /* args.c in Sources */,
+				B85464C7131BBCAB00E3F7D7 /* functions.c in Sources */,
+				B85464C8131BBCAB00E3F7D7 /* image_processing.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -207,22 +208,19 @@
 		1DEB928A08733DD80010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH)";
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_MODEL_TUNING = "";
 				GCC_OPTIMIZATION_LEVEL = 3;
-				GCC_VERSION = 4.2;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /usr/local/include/;
 				LIBRARY_SEARCH_PATHS = "";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = (
-					"-lexif",
-					"-lgd",
-				);
+				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				PRELINK_LIBS = "";
 				SDKROOT = macosx10.5;
@@ -233,35 +231,17 @@
 		1DEB928B08733DD80010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH)";
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /usr/local/include/;
 				INSTALL_PATH = /usr/local/bin;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				SDKROOT = macosx10.5;
-			};
-			name = Release;
-		};
-		B86CC6840FE4857E0058E728 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				PRODUCT_NAME = "Build with make";
-			};
-			name = Debug;
-		};
-		B86CC6850FE4857E0058E728 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				PRODUCT_NAME = "Build with make";
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -282,15 +262,6 @@
 			buildConfigurations = (
 				1DEB928A08733DD80010E9CD /* Debug */,
 				1DEB928B08733DD80010E9CD /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B86CC68A0FE4858D0058E728 /* Build configuration list for PBXLegacyTarget "Build with make" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B86CC6840FE4857E0058E728 /* Debug */,
-				B86CC6850FE4857E0058E728 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

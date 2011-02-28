@@ -1,10 +1,17 @@
-PROGRAM_NAME = thumbs
-COMPILER = gcc
-CFLAGS =  -no-cpp-precomp
-CCFLAGS = -Wall -O2 -lgd -lexif
+PROGRAM_NAME = resize
+CC = gcc
+CCFLAGS = -Wall -g
+srcdir = .
+all: resize
 
-thumbs: main.c 
-	${COMPILER} ${CCFLAGS} main.c -o ${PROGRAM_NAME}
+resize: $(srcdir)/main.o \
+	functions.o \
+	args.o \
+	image_processing.o
+	${CC} ${CCFLAGS} --std=c99 -ggdb -framework ApplicationServices -framework Accelerate -o ${PROGRAM_NAME} args.o functions.o image_processing.o main.o
+
+.c.o:
+	$(CC) $(CFLAGS) --std=c99 -ggdb -c $< -o $@
 
 clean: 
-	rm -rf *.o thumbs
+	rm -rf *.o resize
