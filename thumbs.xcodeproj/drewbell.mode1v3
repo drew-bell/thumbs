@@ -327,16 +327,16 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>B89D1902131D1C7700DA495F</string>
+										<string>B89D195D131D244B00DA495F</string>
 										<key>history</key>
 										<array>
 											<string>B8546504131BBD6E00E3F7D7</string>
 											<string>B8546514131BBDEF00E3F7D7</string>
-											<string>B89D1805131D0BBF00DA495F</string>
 											<string>B89D1806131D0BBF00DA495F</string>
 											<string>B89D1850131D0E0C00DA495F</string>
-											<string>B89D189E131D13D500DA495F</string>
-											<string>B89D18EB131D1A9800DA495F</string>
+											<string>B89D1927131D1F2C00DA495F</string>
+											<string>B89D1948131D228F00DA495F</string>
+											<string>B89D1949131D228F00DA495F</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -535,9 +535,9 @@
 		<string>B89D187C131D0FE600DA495F</string>
 		<string>B89D18A2131D13D500DA495F</string>
 		<string>B89D18A3131D13D500DA495F</string>
+		<string>1CD10A99069EF8BA00B06720</string>
 		<string>B8EF1EAA0FC378B20093469B</string>
 		<string>1C78EAAD065D492600B07095</string>
-		<string>1CD10A99069EF8BA00B06720</string>
 		<string>/Users/drewbell/Hacking/C/thumbs/thumbs.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
@@ -716,10 +716,10 @@
 									<key>Frame</key>
 									<string>{{154, 0}, {723, 584}}</string>
 									<key>RubberWindowFrame</key>
-									<string>16 138 877 852 0 0 1920 1178 </string>
+									<string>273 165 877 852 0 0 1920 1178 </string>
 								</dict>
 								<key>RubberWindowFrame</key>
-								<string>16 138 877 852 0 0 1920 1178 </string>
+								<string>273 165 877 852 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXDebugSessionModule</string>
@@ -753,11 +753,11 @@
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
 			<key>WindowString</key>
-			<string>16 138 877 852 0 0 1920 1178 </string>
+			<string>273 165 877 852 0 0 1920 1178 </string>
 			<key>WindowToolGUID</key>
 			<string>1CD10A99069EF8BA00B06720</string>
 			<key>WindowToolIsVisible</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>Identifier</key>
@@ -889,7 +889,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {802, 318}}</string>
 								<key>RubberWindowFrame</key>
-								<string>33 104 802 359 0 0 1920 1178 </string>
+								<string>82 122 802 359 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXDebugCLIModule</string>
@@ -918,7 +918,7 @@
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.consoleV3</string>
 			<key>WindowString</key>
-			<string>33 104 802 359 0 0 1920 1178 </string>
+			<string>82 122 802 359 0 0 1920 1178 </string>
 			<key>WindowToolGUID</key>
 			<string>1C78EAAD065D492600B07095</string>
 			<key>WindowToolIsVisible</key>

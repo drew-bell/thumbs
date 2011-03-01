@@ -702,9 +702,17 @@ void save_image (vImage_Buffer *src_i, img_prop o, float compression, char *o_fi
 		printf ("Could not create CGDataProviderRef from CGDataRef.\n"); 
 		exit (0);
 	}
-    
-  	// Create a CGImageRef from the rotated data provider
-  CGImageRef processed_image = CGImageCreate (src_i->width, // 1 width
+  
+  CGImageRef processed_image;
+
+  // Create a colour space to be compared against
+  CGColorSpaceRef adobe = CGColorSpaceCreateWithName(kCGColorSpaceAdobeRGB1998);
+
+  // Create the image with a colourspace
+  if (CFEqual(adobe, o->colorSpace)) { 
+
+    CGColorSpaceRelease(adobe);
+    processed_image = CGImageCreate (src_i->width, // 1 width
                                                 src_i->height, // 2 height
                                                 (size_t)o->bits_ppixel/ (o->bits_ppixel/8), // bitsPerComponent
                                                 (size_t)o->bits_ppixel, //bitsPerPixel
@@ -717,7 +725,26 @@ void save_image (vImage_Buffer *src_i, img_prop o, float compression, char *o_fi
                                                 kCGRenderingIntentSaturation); // rendering intent
   	if (NULL == processed_image) exit (0);
     
+  } else {
 
+    CGColorSpaceRelease(adobe);
+    processed_image = CGImageCreate (src_i->width, // 1 width
+                                     src_i->height, // 2 height
+                                     (size_t)o->bits_ppixel/ (o->bits_ppixel/8), // bitsPerComponent
+                                     (size_t)o->bits_ppixel, //bitsPerPixel
+                                     src_i->rowBytes, // bytesPerRow
+                                     CGColorSpaceCreateDeviceRGB(), // ColourSpace
+                                     kCGBitmapByteOrder32Big, // bitmapInfo
+                                     destination_data_provider, // Data provider ** DataProviderRef 
+                                     NULL, // decode
+                                     0, // Interpolate
+                                     kCGRenderingIntentSaturation); // rendering intent
+  	if (NULL == processed_image) exit (0);
+    
+  }
+
+  
+  
 	// create a CFStringRef from the C string
 	CFStringRef fn = CFStringCreateWithCString (NULL, o_file, kCFStringEncodingUTF8);
 	if (NULL == fn) exit (0);
