@@ -706,18 +706,18 @@ void save_image (vImage_Buffer *src_i, img_prop o, float compression, char *o_fi
   CGImageRef processed_image;
 
   // Create a colour space to be compared against
-  CGColorSpaceRef adobe = CGColorSpaceCreateWithName(kCGColorSpaceAdobeRGB1998);
+  CGColorSpaceRef rgb = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
 
   // Create the image with a colourspace
-  if (CFEqual(adobe, o->colorSpace)) { 
+  if (CFEqual(rgb, o->colorSpace)) { 
 
-    CGColorSpaceRelease(adobe);
+    CGColorSpaceRelease(rgb);
     processed_image = CGImageCreate (src_i->width, // 1 width
                                                 src_i->height, // 2 height
                                                 (size_t)o->bits_ppixel/ (o->bits_ppixel/8), // bitsPerComponent
                                                 (size_t)o->bits_ppixel, //bitsPerPixel
                                                 src_i->rowBytes, // bytesPerRow
-                                                o->colorSpace, // ColourSpace
+                                                CGColorSpaceCreateDeviceRGB(), // ColourSpace
                                                 kCGBitmapByteOrder32Big, // bitmapInfo
                                                 destination_data_provider, // Data provider ** DataProviderRef 
                                                 NULL, // decode
@@ -727,13 +727,13 @@ void save_image (vImage_Buffer *src_i, img_prop o, float compression, char *o_fi
     
   } else {
 
-    CGColorSpaceRelease(adobe);
+    CGColorSpaceRelease(rgb);
     processed_image = CGImageCreate (src_i->width, // 1 width
                                      src_i->height, // 2 height
                                      (size_t)o->bits_ppixel/ (o->bits_ppixel/8), // bitsPerComponent
                                      (size_t)o->bits_ppixel, //bitsPerPixel
                                      src_i->rowBytes, // bytesPerRow
-                                     CGColorSpaceCreateDeviceRGB(), // ColourSpace
+                                     o->colorSpace, // ColourSpace
                                      kCGBitmapByteOrder32Big, // bitmapInfo
                                      destination_data_provider, // Data provider ** DataProviderRef 
                                      NULL, // decode
