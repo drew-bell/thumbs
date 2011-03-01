@@ -7,6 +7,8 @@
 #include <ApplicationServices/ApplicationServices.h>
 #include <sys/stat.h>
 
+#define no 0
+
 CFDataRef convert32_24bit (CFDataRef source_data_ptr, img_prop im_props) {
 	
 	// create the variable for the 32bit image.
@@ -128,8 +130,15 @@ void process_1_image (args cli_flags, char *files) {
 	
 
 	// Create the image in memory from the JPEG data
-	CGImageRef source_image = CGImageCreateWithJPEGDataProvider (source_image_provider, NULL, 0, kCGRenderingIntentDefault);
+	CGImageRef source_image = CGImageCreateWithJPEGDataProvider (source_image_provider, NULL, no, kCGRenderingIntentDefault);
 	
+  /********************************************/
+  /* Getting the colour space **/
+  
+  o->colorSpace = CGImageGetColorSpace(source_image);
+  
+  /********************************************/
+  
 	// populate the image info struct
 	pop_img_props (source_image, o);
 	
@@ -186,8 +195,8 @@ void process_1_image (args cli_flags, char *files) {
 	CGImageRelease (source_image);
 	source_image = NULL;
 	
-//	free(source_data_ptr);
-	CFRelease (source_data_ptr);
+	free(source_data_ptr);
+//	CFRelease (source_data_ptr);
 	// Free the filename created by get_out_filename ()
 	free (out_file_name);
 	out_file_name = NULL;
@@ -327,7 +336,7 @@ int get_exif_rot (CGDataProviderRef image_source) {
 	if (NULL == image_exif_source) {
 		
 		// Could not create the CGImageSoureRef
-		printf ("Could create CGImageSourceRef for image.\n");
+		printf ("Could not create CGImageSourceRef for image.\n");
 	}
 
 	// NSDictionary to hold the exif from the file.
@@ -693,20 +702,21 @@ void save_image (vImage_Buffer *src_i, img_prop o, float compression, char *o_fi
 		printf ("Could not create CGDataProviderRef from CGDataRef.\n"); 
 		exit (0);
 	}
-	
-	// Create a CGImageRef from the rotated data provider
-	CGImageRef processed_image = CGImageCreate (src_i->width, // 1 width
-											   src_i->height, // 2 height
-											   (size_t)o->bits_ppixel/ (o->bits_ppixel/8), // bitsPerComponent
-											   (size_t)o->bits_ppixel, //bitsPerPixel
-											   src_i->rowBytes, // bytesPerRow
-											   CGColorSpaceCreateDeviceRGB (), // ColourSpace
-											   kCGBitmapByteOrder32Big, // bitmapInfo
-											   destination_data_provider, // Data provider ** DataProviderRef 
-											   NULL, // decode
-											   0, // Interpolate
-											   kCGRenderingIntentSaturation); // rendering intent
-	if (NULL == processed_image) exit (0);
+    
+  	// Create a CGImageRef from the rotated data provider
+  CGImageRef processed_image = CGImageCreate (src_i->width, // 1 width
+                                                src_i->height, // 2 height
+                                                (size_t)o->bits_ppixel/ (o->bits_ppixel/8), // bitsPerComponent
+                                                (size_t)o->bits_ppixel, //bitsPerPixel
+                                                src_i->rowBytes, // bytesPerRow
+                                                o->colorSpace, // ColourSpace
+                                                kCGBitmapByteOrder32Big, // bitmapInfo
+                                                destination_data_provider, // Data provider ** DataProviderRef 
+                                                NULL, // decode
+                                                0, // Interpolate
+                                                kCGRenderingIntentSaturation); // rendering intent
+  	if (NULL == processed_image) exit (0);
+    
 
 	// create a CFStringRef from the C string
 	CFStringRef fn = CFStringCreateWithCString (NULL, o_file, kCFStringEncodingUTF8);

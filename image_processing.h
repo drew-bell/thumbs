@@ -7,6 +7,7 @@ typedef struct {
 	int image_h;
 	int bits_ppixel;
 	int bytes_row;
+  CGColorSpaceRef colorSpace;
 } image_properties; // image properties
 
 typedef image_properties *img_prop;

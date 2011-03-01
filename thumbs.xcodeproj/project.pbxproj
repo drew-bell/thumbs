@@ -14,6 +14,7 @@
 		B85464C8131BBCAB00E3F7D7 /* image_processing.c in Sources */ = {isa = PBXBuildFile; fileRef = B85464C4131BBCAB00E3F7D7 /* image_processing.c */; };
 		B85464D0131BBD0600E3F7D7 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B85464CF131BBD0600E3F7D7 /* Accelerate.framework */; };
 		B85464D4131BBD1900E3F7D7 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B85464D3131BBD1900E3F7D7 /* ApplicationServices.framework */; };
+		B89D1827131D0CB000DA495F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B89D1826131D0CB000DA495F /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -42,6 +43,7 @@
 		B85464CF131BBD0600E3F7D7 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		B85464D3131BBD1900E3F7D7 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		B85B24AB10861359007328DB /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		B89D1826131D0CB000DA495F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C6A0FF2C0290799A04C91782 /* thumbs.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = thumbs.1; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -52,6 +54,7 @@
 			files = (
 				B85464D0131BBD0600E3F7D7 /* Accelerate.framework in Frameworks */,
 				B85464D4131BBD1900E3F7D7 /* ApplicationServices.framework in Frameworks */,
+				B89D1827131D0CB000DA495F /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,6 +101,7 @@
 			children = (
 				B85464CF131BBD0600E3F7D7 /* Accelerate.framework */,
 				B85464D3131BBD1900E3F7D7 /* ApplicationServices.framework */,
+				B89D1826131D0CB000DA495F /* Foundation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -223,7 +227,7 @@
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				PRELINK_LIBS = "";
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx10.6;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
@@ -241,7 +245,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx10.6;
 			};
 			name = Release;
 		};
