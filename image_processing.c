@@ -707,17 +707,24 @@ void save_image (vImage_Buffer *src_i, img_prop o, float compression, char *o_fi
 
   // Create a colour space to be compared against
   CGColorSpaceRef rgb = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
+  if (NULL == rgb) {
+    fprintf(stderr, "Unable to create the reference colourspace.\n");
+    exit(0);
+  }
 
-  // Create the image with a colourspace
+   // Create the image
   if (CFEqual(rgb, o->colorSpace)) { 
-
+    
+    // release the reference colour space
     CGColorSpaceRelease(rgb);
+    
+    // Create the image with sRGB for the colour space
     processed_image = CGImageCreate (src_i->width, // 1 width
                                                 src_i->height, // 2 height
                                                 (size_t)o->bits_ppixel/ (o->bits_ppixel/8), // bitsPerComponent
                                                 (size_t)o->bits_ppixel, //bitsPerPixel
                                                 src_i->rowBytes, // bytesPerRow
-                                                CGColorSpaceCreateDeviceRGB(), // ColourSpace
+                                                CGColorSpaceCreateDeviceRGB(), // Generic ColourSpace
                                                 kCGBitmapByteOrder32Big, // bitmapInfo
                                                 destination_data_provider, // Data provider ** DataProviderRef 
                                                 NULL, // decode
@@ -727,13 +734,16 @@ void save_image (vImage_Buffer *src_i, img_prop o, float compression, char *o_fi
     
   } else {
 
+    // release the reference colour space
     CGColorSpaceRelease(rgb);
+
+    // Create the image with sRGB for the colour space
     processed_image = CGImageCreate (src_i->width, // 1 width
                                      src_i->height, // 2 height
                                      (size_t)o->bits_ppixel/ (o->bits_ppixel/8), // bitsPerComponent
                                      (size_t)o->bits_ppixel, //bitsPerPixel
                                      src_i->rowBytes, // bytesPerRow
-                                     o->colorSpace, // ColourSpace
+                                     o->colorSpace, // ColourSpace of original
                                      kCGBitmapByteOrder32Big, // bitmapInfo
                                      destination_data_provider, // Data provider ** DataProviderRef 
                                      NULL, // decode
@@ -742,8 +752,6 @@ void save_image (vImage_Buffer *src_i, img_prop o, float compression, char *o_fi
   	if (NULL == processed_image) exit (0);
     
   }
-
-  
   
 	// create a CFStringRef from the C string
 	CFStringRef fn = CFStringCreateWithCString (NULL, o_file, kCFStringEncodingUTF8);

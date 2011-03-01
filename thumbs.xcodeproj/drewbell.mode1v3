@@ -327,7 +327,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>B89D1971131D25B100DA495F</string>
+										<string>B89D1993131D31AC00DA495F</string>
 										<key>history</key>
 										<array>
 											<string>B8546504131BBD6E00E3F7D7</string>
@@ -335,8 +335,10 @@
 											<string>B89D1806131D0BBF00DA495F</string>
 											<string>B89D1850131D0E0C00DA495F</string>
 											<string>B89D1927131D1F2C00DA495F</string>
-											<string>B89D1948131D228F00DA495F</string>
-											<string>B89D1949131D228F00DA495F</string>
+											<string>B89D1980131D28D500DA495F</string>
+											<string>B89D1981131D28D500DA495F</string>
+											<string>B89D1982131D28D500DA495F</string>
+											<string>B89D1983131D28D500DA495F</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -535,9 +537,9 @@
 		<string>B89D187C131D0FE600DA495F</string>
 		<string>B89D18A2131D13D500DA495F</string>
 		<string>B89D18A3131D13D500DA495F</string>
+		<string>1C78EAAD065D492600B07095</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>B8EF1EAA0FC378B20093469B</string>
-		<string>1C78EAAD065D492600B07095</string>
 		<string>/Users/drewbell/Hacking/C/thumbs/thumbs.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
@@ -922,7 +924,7 @@
 			<key>WindowToolGUID</key>
 			<string>1C78EAAD065D492600B07095</string>
 			<key>WindowToolIsVisible</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>Identifier</key>
