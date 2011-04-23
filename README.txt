@@ -14,7 +14,7 @@ Images are output using a set quality of 80%. The ability to change the JPEG qua
 
 ICC profiles and EXIF are removed from the scaled file. This was done on purpose to achieve a smaller file size for web galleries. I may add the ability to retain them in the future.
 
-If the input image has Adobe1998 as it's colour profile, it is converted to sRGB using the littleCMS library/Framework (NOT INCLUDED)
+If the input image has Adobe1998 as it's colour profile, it is converted to sRGB using the littleCMS library/Framework (NOT INCLUDED). This feature is in beta.
 
 Scaling is done using the Lanczos5 filter provided by Apple. This is their "High quality resize" filter.
 
