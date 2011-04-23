@@ -6,8 +6,63 @@
 #include <Accelerate/Accelerate.h>
 #include <ApplicationServices/ApplicationServices.h>
 #include <sys/stat.h>
+#include <lcms2.h>
 
 #define no 0
+#define yes 1
+
+CFDataRef convert_space (CFDataRef source_data_ptr, int width, int height) {
+    
+    // Get the pointer to the actual data
+	const void *InPutBuffer = CFDataGetBytePtr (source_data_ptr);
+    
+    // Assign the memory for the transform
+    void *YourOutputBuffer = malloc(sizeof(void)*width*height*4);
+    
+    cmsHPROFILE hInProfile, hOutProfile; 
+    cmsHTRANSFORM hTransform; 
+    
+    // Load the colour profiles
+    hInProfile = cmsOpenProfileFromFile("/Library/Application Support/Nikon/Profiles/NKAdobe.icm", "r"); 
+    hOutProfile = cmsOpenProfileFromFile("/Library/Application Support/Nikon/Profiles/NKsRGB.icm", "r");
+    
+    // Create the transform matrix
+    hTransform = cmsCreateTransform(hInProfile, 
+                                    TYPE_RGB_8, 
+                                    hOutProfile, 
+                                    TYPE_RGB_8, 
+                                    INTENT_PERCEPTUAL, 
+                                    0);
+    
+    // Convert the image colours
+    cmsDoTransform(hTransform, 
+                   InPutBuffer, 
+                   YourOutputBuffer, 
+                   width*height);
+    
+    cmsDeleteTransform(hTransform); 
+    cmsCloseProfile(hInProfile); 
+    cmsCloseProfile(hOutProfile);
+    
+    // Create the return data object
+    CFDataRef ret_val = CFDataCreate (NULL, YourOutputBuffer, height * width * 4);
+    
+    // release the old image
+	CFRelease (source_data_ptr);
+
+	// Null the pointer after releasing
+    source_data_ptr = NULL;
+    
+    // NULL the pointer
+    InPutBuffer = NULL;
+
+	// Free the temp buffer for the colour space image
+    free(YourOutputBuffer);
+    
+    fprintf(stdout, "Colour space converted.\n");
+	// return the new image
+	return ret_val;
+}
 
 CFDataRef convert32_24bit (CFDataRef source_data_ptr, img_prop im_props) {
 	
@@ -196,7 +251,7 @@ void process_1_image (args cli_flags, char *files) {
 	source_image = NULL;
 	
 	free(source_data_ptr);
-//	CFRelease (source_data_ptr);
+    
 	// Free the filename created by get_out_filename ()
 	free (out_file_name);
 	out_file_name = NULL;
@@ -685,9 +740,21 @@ void save_image (vImage_Buffer *src_i, img_prop o, float compression, char *o_fi
 		// convert from 24bit to 32bit by adding the alpha channel.
 		output_Data = convert32_24bit (output_Data, o);
 		src_i->rowBytes = src_i->width * 3;
-		
 	}
 
+    // Create a colour space to be compared against
+    CGColorSpaceRef rgb = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
+    if (NULL == rgb) {
+        fprintf(stderr, "Unable to create the reference colourspace.\n");
+        exit(0);
+    }
+    
+    // Convert the colourspace to RGB
+    if (!CFEqual(rgb, o->colorSpace)) {
+        output_Data = convert_space(output_Data, o->image_w, o->image_h);
+        if (NULL == output_Data) exit(0);
+    }
+    
 	// Check for a NULL value.
 	if (NULL == output_Data) {
 		printf ("Could not create CFDataRef from vImage_Buffer.\n"); 
@@ -705,16 +772,6 @@ void save_image (vImage_Buffer *src_i, img_prop o, float compression, char *o_fi
   
   CGImageRef processed_image;
 
-  // Create a colour space to be compared against
-  CGColorSpaceRef rgb = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
-  if (NULL == rgb) {
-    fprintf(stderr, "Unable to create the reference colourspace.\n");
-    exit(0);
-  }
-
-   // Create the image
-  if (CFEqual(rgb, o->colorSpace)) { 
-    
     // release the reference colour space
     CGColorSpaceRelease(rgb);
     
@@ -731,7 +788,7 @@ void save_image (vImage_Buffer *src_i, img_prop o, float compression, char *o_fi
                                                 0, // Interpolate
                                                 kCGRenderingIntentSaturation); // rendering intent
   	if (NULL == processed_image) exit (0);
-    
+/*    
   } else {
 
     // release the reference colour space
@@ -751,7 +808,7 @@ void save_image (vImage_Buffer *src_i, img_prop o, float compression, char *o_fi
                                      kCGRenderingIntentSaturation); // rendering intent
   	if (NULL == processed_image) exit (0);
     
-  }
+  }*/
   
 	// create a CFStringRef from the C string
 	CFStringRef fn = CFStringCreateWithCString (NULL, o_file, kCFStringEncodingUTF8);
