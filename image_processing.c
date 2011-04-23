@@ -11,57 +11,56 @@
 #define no 0
 #define yes 1
 
-CFDataRef convert_space (CFDataRef source_data_ptr, int width, int height) {
-    
-    // Get the pointer to the actual data
-	const void *InPutBuffer = CFDataGetBytePtr (source_data_ptr);
-    
+void* convert_space (const void *source_data_ptr, int width, int height) {
+
     // Assign the memory for the transform
     void *YourOutputBuffer = malloc(sizeof(void)*width*height*4);
     
+    // Create the required variables
     cmsHPROFILE hInProfile, hOutProfile; 
     cmsHTRANSFORM hTransform; 
     
     // Load the colour profiles
     hInProfile = cmsOpenProfileFromFile("/Library/Application Support/Nikon/Profiles/NKAdobe.icm", "r"); 
-    hOutProfile = cmsOpenProfileFromFile("/Library/Application Support/Nikon/Profiles/NKsRGB.icm", "r");
+    hOutProfile = cmsCreate_sRGBProfile();
     
     // Create the transform matrix
     hTransform = cmsCreateTransform(hInProfile, 
-                                    TYPE_RGB_8, 
+                                    TYPE_RGBA_8, 
                                     hOutProfile, 
-                                    TYPE_RGB_8, 
+                                    TYPE_RGBA_8, 
                                     INTENT_PERCEPTUAL, 
                                     0);
     
     // Convert the image colours
     cmsDoTransform(hTransform, 
-                   InPutBuffer, 
+                   source_data_ptr, 
                    YourOutputBuffer, 
                    width*height);
-    
+
+    // Delete the opened stuff
     cmsDeleteTransform(hTransform); 
     cmsCloseProfile(hInProfile); 
     cmsCloseProfile(hOutProfile);
     
     // Create the return data object
-    CFDataRef ret_val = CFDataCreate (NULL, YourOutputBuffer, height * width * 4);
+  //  CFDataRef ret_val = CFDataCreate (NULL, YourOutputBuffer, height * width * 4);
     
     // release the old image
-	CFRelease (source_data_ptr);
+//	CFRelease (source_data_ptr);
 
 	// Null the pointer after releasing
     source_data_ptr = NULL;
     
     // NULL the pointer
-    InPutBuffer = NULL;
+    source_data_ptr = NULL;
 
 	// Free the temp buffer for the colour space image
-    free(YourOutputBuffer);
+ //   free(YourOutputBuffer);
     
-    fprintf(stdout, "Colour space converted.\n");
+    fprintf(stdout, "Colour space converted.");
 	// return the new image
-	return ret_val;
+	return YourOutputBuffer;
 }
 
 CFDataRef convert32_24bit (CFDataRef source_data_ptr, img_prop im_props) {
@@ -202,7 +201,7 @@ void process_1_image (args cli_flags, char *files) {
 	
 	// Create a pointer to the data section of the image in memory
 	CFDataRef source_data_ptr = CGDataProviderCopyData (image_data_provider);
-	
+
 	// The vImage_Buffers we will use
 	vImage_Buffer *vImage_source = (vImage_Buffer*) malloc (sizeof (vImage_Buffer));
 	
@@ -236,6 +235,22 @@ void process_1_image (args cli_flags, char *files) {
 	if (o->image_rot == 2  || o->image_rot == 4 || o->image_rot == 7 || o->image_rot == 5)
 		flip_image (vImage_source, o, NULL);
 	
+    // Create a colour space to be compared against
+    CGColorSpaceRef rgb = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
+    if (NULL == rgb) {
+        fprintf(stderr, "Unable to create the reference colourspace.\n");
+        exit(0);
+    }
+    
+    // Convert the colourspace to RGB
+    if (!CFEqual(rgb, o->colorSpace) && !cli_flags->disableCC) {
+        vImage_source->data = convert_space(vImage_source->data, o->image_w, o->image_h);
+        if (NULL == vImage_source->data) exit(0);
+    }
+    
+    // release the reference colour space
+    CGColorSpaceRelease(rgb);
+    
 	// Resize the images
 	resize_image (vImage_source, o, cli_flags);
 
@@ -742,18 +757,6 @@ void save_image (vImage_Buffer *src_i, img_prop o, float compression, char *o_fi
 		src_i->rowBytes = src_i->width * 3;
 	}
 
-    // Create a colour space to be compared against
-    CGColorSpaceRef rgb = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
-    if (NULL == rgb) {
-        fprintf(stderr, "Unable to create the reference colourspace.\n");
-        exit(0);
-    }
-    
-    // Convert the colourspace to RGB
-    if (!CFEqual(rgb, o->colorSpace)) {
-        output_Data = convert_space(output_Data, o->image_w, o->image_h);
-        if (NULL == output_Data) exit(0);
-    }
     
 	// Check for a NULL value.
 	if (NULL == output_Data) {
@@ -770,11 +773,9 @@ void save_image (vImage_Buffer *src_i, img_prop o, float compression, char *o_fi
 		exit (0);
 	}
   
-  CGImageRef processed_image;
+    CGImageRef processed_image;
 
-    // release the reference colour space
-    CGColorSpaceRelease(rgb);
-    
+  
     // Create the image with sRGB for the colour space
     processed_image = CGImageCreate (src_i->width, // 1 width
                                                 src_i->height, // 2 height

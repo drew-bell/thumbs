@@ -4,6 +4,7 @@
 typedef struct {
 	bool verbose; // verbosely tell the user what is happening
 	bool gallery; // create a gallery 
+    bool disableCC; // disable colour conversion
 	char *prefix; // prefix to add to files
 	char *suffix; // suffix to add to files
 	char *subdir; // subdir to put the files in

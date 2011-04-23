@@ -6,7 +6,8 @@
 #include "args.h"
 #include <limits.h>
 #include "functions.h"
-
+#define no false
+#define yes true
 static const char PROGRAM_VERSION[] = "2.0";
 
 void release_options (args o) {
@@ -20,8 +21,9 @@ void release_options (args o) {
 } // release_options
 
 void null_options (args o) {
-	o->verbose = false; // verbosely tell the user what is happening
-	o->gallery = false; // create a gallery 
+	o->verbose = no; // verbosely tell the user what is happening
+	o->gallery = no; // create a gallery 
+    o->disableCC = no;
 	o->prefix = NULL; // prefix to add to files
 	o->suffix = NULL; // suffix to add to files
 	o->subdir = NULL; // subdir to put the files in
@@ -133,6 +135,7 @@ static void help (const char *argv0) {
 	
 	fprintf (stderr, "Usage: %s [OPTIONS] <SVG_file> <out_file>\n", argv0_base);
 	puts ("");
+    fprintf (stderr, "  -c, --disable-ColCon\tDisable conversion from Adobe1998 to sRGB.\n");
 	fprintf (stderr, "  -w, --width=WIDTH\tWidth of output image in pixels.\n");
 	fprintf (stderr, "  -h, --height=HEIGHT\tHeight of output image in pixels.\n");
 	fprintf (stderr, "  -l, --longside=LENGTH\tLongside of output image in pixels.\n");
@@ -163,6 +166,7 @@ void process_cli_args (int argc, char **argv, args opts, char **in_files) {
 		
 		/* These options set a bool flag. */
 		{"version", no_argument, NULL, 'V'}, 
+        {"disable-ColCon", no_argument, NULL, 'c'},
 		{"verbose", no_argument, NULL, 'v'}, 
 		{"help", no_argument, NULL, '?'}, 
 		{"gallery", no_argument, NULL, 'g'},
@@ -179,16 +183,20 @@ void process_cli_args (int argc, char **argv, args opts, char **in_files) {
 	};
 	
 	// parse the options and set the values in the options structure
-	while ( (c = getopt_long (argc, argv, "V?vgq:l:p:d:s:w:h:", long_options, NULL)) != -1) {
+	while ( (c = getopt_long (argc, argv, "V?vcgq:l:p:d:s:w:h:", long_options, NULL)) != -1) {
 		switch (c) {
 			case 'v':
 				// Output the strokes in individual images collectively
-				opts->verbose = true;
+				opts->verbose = yes;
 				break;
 			case 'g':
 				// Set the remove numbers option
-				opts->gallery = true;
+				opts->gallery = yes;
 				break;
+            case 'c':
+                // Turn off colour conversion
+                opts->disableCC = yes;
+                break;
 			case 'w':
 				// Add the argument for the -w tag as an integer to the struct
 				opts->image_w = atoi (optarg);
