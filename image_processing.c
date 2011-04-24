@@ -235,6 +235,10 @@ void process_1_image (args cli_flags, char *files) {
 	if (o->image_rot == 2  || o->image_rot == 4 || o->image_rot == 7 || o->image_rot == 5)
 		flip_image (vImage_source, o, NULL);
 	
+  
+	// Resize the images
+	resize_image (vImage_source, o, cli_flags);
+
     // Create a colour space to be compared against
     CGColorSpaceRef rgb = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
     if (NULL == rgb) {
@@ -251,9 +255,6 @@ void process_1_image (args cli_flags, char *files) {
     // release the reference colour space
     CGColorSpaceRelease(rgb);
     
-	// Resize the images
-	resize_image (vImage_source, o, cli_flags);
-
 	// save the image
 	save_image (vImage_source, o, cli_flags->quality, out_file_name);
 	
